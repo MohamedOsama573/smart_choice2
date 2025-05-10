@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+@theme {
+  --color-main: #8ea9bc;
+}
+.active {
+  color: rgb(63, 80, 108);
+}
+body {
+  font-family: "Cairo", sans-serif;
+}
