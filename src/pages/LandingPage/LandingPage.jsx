@@ -9,7 +9,6 @@ function LandingPage() {
     <Hero />
     <PlatformBenefits />
     <Testimonials />
-    <Footer />
     </>
   )
 }

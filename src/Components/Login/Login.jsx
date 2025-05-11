@@ -7,7 +7,8 @@ import { IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FadeLoader } from "react-spinners";
-
+import { useGoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -70,7 +71,35 @@ export const Login = () => {
         .required("Password is required"),
     }),
   });
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const { access_token: idToken } = tokenResponse;
 
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASEURL}/api/v1/google-login`,
+          { idToken }
+        );
+
+        const { data } = response;
+        if (data.access_token) {
+          localStorage.setItem("token", data.access_token);
+          navigate("/");
+        } else {
+          throw new Error("Access token missing from the response.");
+        }
+      } catch (err) {
+       toast.error("An error just happened")
+      }
+    },
+    onError: () => {
+      Swal.fire({
+        icon: "error",
+        title: t("signin.googleLoginFailedTitle"), // Translation key for Google login failed title
+        text: t("signin.googleLoginErrorText"), // Translation key for Google login error text
+      });
+    },
+  });
   return (
     <div className="relative flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 bg-gray-50">
       {isLoading && (
@@ -179,6 +208,7 @@ export const Login = () => {
         <button
           className="flex items-center justify-center w-full border border-gray-300 shadow bg-white text-md p-2 rounded-lg hover:bg-gray-50 hover:scale-[102%] hover:transition-all duration-200 ease-in-out"
           disabled={isLoading}
+          onClick={() => loginWithGoogle()}
         >
           <FcGoogle className="text-2xl mr-1.5" /> Google
         </button>

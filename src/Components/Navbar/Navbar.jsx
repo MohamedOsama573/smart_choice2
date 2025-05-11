@@ -6,6 +6,7 @@ import compare from "../../assets/compare logo.svg";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
 import SearchBar from "./SearchBar";
+
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
@@ -13,13 +14,14 @@ export const Navbar = () => {
   };
   const navigate = useNavigate();
   const isAuthenticated = !!localStorage.getItem("token");
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
 
   return (
-    <nav className="flex justify-between items-center bg-[#302D29] text-white p-3 shadow-md px-5">
+    <nav className="relative flex justify-between items-center bg-[#302D29] text-white p-3 shadow-md px-5">
       {/* Logo */}
       <Link
         to="/"
@@ -30,14 +32,11 @@ export const Navbar = () => {
       </Link>
 
       {/* Search Bar */}
-     <SearchBar />
-
-      {/* Navigation Links */}
-      <div
-        className={`flex items-center space-x-4 md:space-x-6 ${
-          isOpen ? "flex" : "hidden"
-        } md:flex flex-col md:flex-row absolute md:static top-16 left-0 w-full md:w-auto md:bg-transparent p-4 md:p-0 z-10 bg-[#302D29] md:text-white text-black`}
-      >
+     <div className="hidden md:block">
+  <SearchBar />
+</div>
+      {/* Desktop Navigation Links */}
+      <div className="hidden md:flex items-center space-x-6">
         <NavLink
           to="/compare"
           className={({ isActive }) =>
@@ -47,20 +46,19 @@ export const Navbar = () => {
           }
         >
           COMPARE
-          <img src={compare} alt="compare" className="w-7 h-7" />
+          <img src={compare} alt="compare" className="w-6 h-6" />
         </NavLink>
         <NavLink
           to="/wishlist"
           className={({ isActive }) =>
-            `flex items-center gap-1 font-bold ${
-              isActive ? "text-main" : "text-white hover:text-main"
-            }`
-          }>
+             `${isActive ? "text-main font-bold" : "text-white hover:text-main"}`
+          }
+        >
           WISHLIST
-          </NavLink>
+        </NavLink>
         {isAuthenticated ? (
           <button
-            className="flex justify-center items-center gap-1"
+            className="flex items-center gap-1 font-bold"
             onClick={handleLogout}
           >
             <LuLogOut /> Logout
@@ -75,14 +73,14 @@ export const Navbar = () => {
             }
           >
             Log in
-            <CiLogin className="text-amber-400 text-2xl" />
+            <CiLogin className="text-white text-2xl" />
           </NavLink>
         )}
       </div>
 
-      {/* Hamburger Menu */}
+      {/* Hamburger Menu Icon (Mobile) */}
       <div
-        className="md:hidden flex flex-col cursor-pointer space-y-1"
+        className="md:hidden flex flex-col cursor-pointer space-y-1 z-50"
         onClick={toggleMenu}
       >
         <span
@@ -100,6 +98,72 @@ export const Navbar = () => {
             isOpen ? "-rotate-45 -translate-y-2" : ""
           }`}
         ></span>
+      </div>
+
+      {/* Overlay when menu is open */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          onClick={toggleMenu}
+        ></div>
+      )}
+
+      {/* Side Drawer Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-[#302D29] text-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        } md:hidden flex flex-col p-5 space-y-6`}
+      >
+        <button onClick={toggleMenu} className="self-end text-3xl">
+          &times;
+        </button>
+        <NavLink
+          to="/compare"
+          className={({ isActive }) =>
+            `flex items-center gap-2 font-bold ${
+              isActive ? "text-main" : "text-white hover:text-main"
+            }`
+          }
+          onClick={toggleMenu}
+        >
+          <img src={compare} alt="compare" className="w-6 h-6" />
+          COMPARE
+        </NavLink>
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
+            `flex items-center gap-2 font-bold ${
+              isActive ? "text-main" : "text-white hover:text-main"
+            }`
+          }
+          onClick={toggleMenu}
+        >
+          WISHLIST
+        </NavLink>
+        {isAuthenticated ? (
+          <button
+            className="flex items-center gap-2 font-bold"
+            onClick={() => {
+              handleLogout();
+              toggleMenu();
+            }}
+          >
+            <LuLogOut /> Logout
+          </button>
+        ) : (
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `flex items-center gap-2 font-bold ${
+                isActive ? "text-main" : "text-white hover:text-main"
+              }`
+            }
+            onClick={toggleMenu}
+          >
+            Log in
+            <CiLogin className="text-white text-2xl" />
+          </NavLink>
+        )}
       </div>
     </nav>
   );

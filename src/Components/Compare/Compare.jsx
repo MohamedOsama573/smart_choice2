@@ -71,7 +71,7 @@ export const Compare = () => {
       </h1>
 
       {/* Product Header */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {products.map((product) => {
           const isBest = product.id === bestProductId;
 
@@ -149,11 +149,7 @@ export const Compare = () => {
                   className="p-2 border font-bold text-center"
                 >
                   <div className="flex flex-col justify-center items-center my-2">
-                    <img
-                      src={product.thumbnailImage}
-                      alt={product.title}
-                      className="h-32 mx-auto object-contain mb-2"
-                    />{" "}
+                  
                     <p>{product.title}</p>
                   </div>
                 </th>

@@ -85,11 +85,13 @@ function HomeCard({
 
   return (
     <div className="flex flex-col justify-center items-center bg-white rounded-lg shadow-md py-6 px-4 m-2">
-      <img
+     <Link to={`/${category}/product/${id}`}>
+     <img
         src={image}
         alt={name}
         className="cursor-pointer h-56 rounded-t-lg transition-transform duration-300 transform hover:scale-110"
       />
+     </Link>
 
       <Link
         to={`/${category}/product/${id}`}
