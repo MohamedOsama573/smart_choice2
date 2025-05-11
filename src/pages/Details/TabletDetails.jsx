@@ -104,9 +104,6 @@ function TabletDetails() {
               />
             ))}
           </div>
-          <Button onClick={handleNextImage} className="mt-4">
-            Next Image
-          </Button>
         </div>
 
         {/* Right: Info */}

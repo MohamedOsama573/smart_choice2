@@ -15,6 +15,7 @@ import TelevisionDetails from './pages/Details/TelevisionDetails'
 import { Home } from './pages/Home/Home'
 import Wishlist from './pages/Wishlist/Wishlist'
 import LandingPage from './pages/LandingPage/LandingPage'
+import ChangePassword from './Components/ChangePassword/ChangePassword'
 
 const router = createBrowserRouter([
   {path: '' , element: <Layout/>, children: [
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
     {path:'/Mobile/product/:id' , element:<MobileDetails/>},
     {path:'/Tablet/product/:id' , element:<TabletDetails/>},
     {path:'/Television/product/:id' , element:<TelevisionDetails/>},
-    {path:'forgetPassword' , element:<ForgetPassword/>},
+    {path:'forget-password' , element:<ForgetPassword/>},
+    {path:'change-password' , element:<ChangePassword/>},
     {path:'*' , element:<Notfound/>},
   ]}
 ])

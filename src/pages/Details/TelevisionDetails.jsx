@@ -105,9 +105,6 @@ function TelevisionDetails() {
               />
             ))}
           </div>
-          <Button onClick={handleNextImage} className="mt-4">
-            Next Image
-          </Button>
         </div>
 
         {/* Right: Info */}
