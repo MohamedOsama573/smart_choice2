@@ -137,6 +137,7 @@ export const Home = () => {
                   category={product.category}
                   selected={selectedProducts.includes(product._id)}
                   onSelect={handleSelect}
+                  isRecomendation={false}
                 />
               ))}
             </div>

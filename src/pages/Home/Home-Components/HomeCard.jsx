@@ -18,6 +18,7 @@ function HomeCard({
   category,
   onSelect,
   selected,
+  isRecomendation,
 }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isCompared, setIsCompared] = useState(selected);
@@ -38,15 +39,20 @@ function HomeCard({
       }
 
       if (isWishlisted) {
-        await axios.delete(
-          `${import.meta.env.VITE_BASEURL}/api/v1/wishlist/${id}`,
+        const token = localStorage.getItem("token");
+        const response = await axios.delete(
+          `${import.meta.env.VITE_BASEURL}/api/v1/delete-wishlist`,
           {
             headers: {
               Authorization: `abdelrahman ${token}`,
             },
+            data: {
+              productId: id,
+              modelType: category,
+            },
           }
         );
-        toast.info("Removed from wishlist.");
+        toast.success(response.data.message || "Deleted from wishlist!");
       } else {
         const response = await axios.post(
           `${import.meta.env.VITE_BASEURL}/api/v1/wishlist`,
@@ -71,11 +77,10 @@ function HomeCard({
   const handleCompareToggle = () => {
     setIsCompared(!isCompared);
     onSelect(id);
-toast[!isCompared ? "success" : "info"](
-  !isCompared ? "Added to compare." : "Removed from compare.",
-  { autoClose: 1500 }
-);
-
+    toast[!isCompared ? "success" : "info"](
+      !isCompared ? "Added to compare." : "Removed from compare.",
+      { autoClose: 1500 }
+    );
   };
 
   return (
@@ -116,16 +121,20 @@ toast[!isCompared ? "success" : "info"](
       )}
 
       <div className="flex gap-2 justify-between items-center w-full mt-2">
-        <button
-          onClick={handleCompareToggle}
-          className={`border py-2 px-6 rounded text-lg font-bold ${
-            isCompared
-              ? "bg-black text-white"
-              : "bg-white text-black hover:bg-gray-900 hover:text-white"
-          }`}
-        >
-          Compare
-        </button>
+        {isRecomendation ? (
+          ""
+        ) : (
+          <button
+            onClick={handleCompareToggle}
+            className={`border py-2 px-6 rounded text-lg font-bold ${
+              isCompared
+                ? "bg-black text-white"
+                : "bg-white text-black hover:bg-gray-900 hover:text-white"
+            }`}
+          >
+            Compare
+          </button>
+        )}
 
         {isAuthenticated && (
           <button

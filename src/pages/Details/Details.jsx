@@ -41,10 +41,11 @@ export default function Details() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          `${import.meta.env.VITE_BASEURL}/api/v1/products/amazon-laptop/${id}`,{
+          `${import.meta.env.VITE_BASEURL}/api/v1/products/amazon-laptop/${id}`,
+          {
             headers: {
-              Authorization : `abdelrahman ${token}`,
-            }
+              Authorization: `abdelrahman ${token}`,
+            },
           }
         );
         setProduct(response.data);
@@ -59,12 +60,16 @@ export default function Details() {
     getRecomendationProducts();
   }, [id]);
 
-
-
-  if (loading) return <div className="flex justify-center items-center my-12">
-    <Loading />
-  </div>;
-  if (error || !product) return <div className="text-center p-5 text-red-500">Error loading product</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center my-12">
+        <Loading />
+      </div>
+    );
+  if (error || !product)
+    return (
+      <div className="text-center p-5 text-red-500">Error loading product</div>
+    );
 
   return (
     <div className="p-5 max-w-6xl mx-auto">
@@ -72,7 +77,10 @@ export default function Details() {
         {/* Left: Images */}
         <div className="relative">
           <img
-            src={product.galleryThumbnails?.[currentImageIndex] || product.thumbnailImage}
+            src={
+              product.galleryThumbnails?.[currentImageIndex] ||
+              product.thumbnailImage
+            }
             alt={product.title}
             className="rounded-lg w-full max-h-[400px] object-contain"
           />
@@ -82,7 +90,11 @@ export default function Details() {
                 key={idx}
                 src={img}
                 alt={`thumb-${idx}`}
-                className={`h-16 w-16 object-cover rounded-md border-2 ${currentImageIndex === idx ? 'border-blue-500' : 'border-gray-300'}`}
+                className={`h-16 w-16 object-cover rounded-md border-2 ${
+                  currentImageIndex === idx
+                    ? "border-blue-500"
+                    : "border-gray-300"
+                }`}
                 onClick={() => setCurrentImageIndex(idx)}
               />
             ))}
@@ -93,7 +105,7 @@ export default function Details() {
         <div>
           <h2 className="text-2xl font-bold mb-2">{product.title}</h2>
 
-          <div className="flex gap-4 mb-4 mt-5">
+          <div className="flex flex-col gap-4 mb-4 mt-5">
             {product.priceAmazon && (
               <a href={product.urls?.amazon} target="_blank">
                 <img src={amazonLogo} alt="Amazon" className="h-8" />
@@ -110,13 +122,16 @@ export default function Details() {
             {product.urls?.noon && (
               <a href={product.urls?.noon} target="_blank">
                 <img src={noonLogo} alt="Noon" className="h-8" />
+                <p className="text-sm">{product.priceNoon} EGP</p>
               </a>
             )}
           </div>
 
           {/* Description */}
           <p className="text-gray-700 mb-4">
-            {showMore ? product.description : `${product.description.slice(0, 250)}...`}
+            {showMore
+              ? product.description
+              : `${product.description.slice(0, 250)}...`}
             {product.description.length > 250 && (
               <button
                 onClick={() => setShowMore(!showMore)}
@@ -126,7 +141,7 @@ export default function Details() {
               </button>
             )}
           </p>
-     
+
           {/* Features */}
           <ul className="list-disc ml-5 text-sm text-gray-700">
             {product.features?.map((feat, i) => (
@@ -135,8 +150,8 @@ export default function Details() {
           </ul>
         </div>
       </div>
- {/* Recomendations  */}
- <div className="mt-8">
+      {/* Recomendations  */}
+      <div className="mt-8">
         <h3 className="text-xl font-semibold mb-2">Recommended Products</h3>
         {loading ? (
           <div className="flex justify-center items-center my-8">
@@ -155,6 +170,7 @@ export default function Details() {
                 priceNoon={product.priceNoon}
                 currency={product.currency}
                 category={product.category}
+                isRecomendation={true}
               />
             ))}
           </div>
@@ -166,7 +182,8 @@ export default function Details() {
         <div className="grid md:grid-cols-2 gap-4 text-sm">
           {product.attributes?.map((attr) => (
             <div key={attr._id} className="bg-gray-50 p-2 rounded shadow-sm">
-              <span className="font-semibold">{attr.key}</span>: {attr.value || "N/A"}
+              <span className="font-semibold">{attr.key}</span>:{" "}
+              {attr.value || "N/A"}
             </div>
           ))}
         </div>
@@ -194,9 +211,13 @@ export default function Details() {
                 </div>
                 <p className="font-bold">{review.reviewTitle}</p>
                 <p className="text-gray-700">{review.reviewDescription}</p>
-                <p className="text-yellow-500">Rating: {review.ratingScore}/5</p>
+                <p className="text-yellow-500">
+                  Rating: {review.ratingScore}/5
+                </p>
                 {review.reviewReaction && (
-                  <p className="text-xs text-gray-500 mt-1">{review.reviewReaction}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {review.reviewReaction}
+                  </p>
                 )}
               </div>
             ))}

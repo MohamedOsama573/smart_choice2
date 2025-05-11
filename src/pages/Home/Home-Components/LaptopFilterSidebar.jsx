@@ -49,18 +49,6 @@ const LaptopFilterSidebar = ({ filters, setFilters }) => {
         />
       </div>
 
-      {/* Category */}
-      <div>
-        <label className="block font-medium mb-1">Category</label>
-        <select
-          value={localFilters.category || ""}
-          onChange={(e) => handleChange("category", e.target.value)}
-          className="w-full border border-gray-300 rounded px-3 py-2"
-        >
-          <option value="">All</option>
-          <option value="Laptop">Laptop</option>
-        </select>
-      </div>
 
       {/* Availability */}
       <div>

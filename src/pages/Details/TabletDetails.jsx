@@ -201,6 +201,8 @@ function TabletDetails() {
                 priceNoon={product.priceNoon}
                 currency={product.currency}
                 category={product.category}
+                isRecomendation={true}
+
               />
             ))}
           </div>

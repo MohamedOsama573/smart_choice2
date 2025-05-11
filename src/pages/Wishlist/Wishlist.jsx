@@ -29,20 +29,7 @@ function Wishlist() {
   }, []);
   const deleteFromWishlist = async (productId, modelType) => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.delete(
-        `${import.meta.env.VITE_BASEURL}/api/v1/delete-wishlist`,
-        {
-          headers: {
-            Authorization: `abdelrahman ${token}`,
-          },
-          data: {
-            productId,
-            modelType,
-          },
-        }
-      );
-      toast.success(response.data.message || "Deleted from wishlist!");
+      
       window.location.reload();
     } catch (error) {
       console.error("Failed to delete from wishlist", error);

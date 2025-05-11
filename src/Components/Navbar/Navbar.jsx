@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from "../../assets/smart choice.svg";
+import logo from "../../assets/smart choice logo.svg";
 import { CiLogin } from "react-icons/ci";
-import compare from "../../assets/Screenshot_2025-02-17_125922-removebg-preview.svg";
-// import { IoSearchOutline } from "react-icons/io5";
+import compare from "../../assets/compare logo.svg";
+import { IoSearchOutline } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
+import SearchBar from "./SearchBar";
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
@@ -29,14 +30,7 @@ export const Navbar = () => {
       </Link>
 
       {/* Search Bar */}
-      <div className="w-2xl mx-4 bg-gray-50 border-1 border-blue-200 rounded-xl hidden sm:flex">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full p-2 border-gray-300 rounded outline-none border-0"
-        />
-        {/* <IoSearchOutline className="absolute top-5" /> */}
-      </div>
+     <SearchBar />
 
       {/* Navigation Links */}
       <div
@@ -66,7 +60,7 @@ export const Navbar = () => {
           </NavLink>
         {isAuthenticated ? (
           <button
-            className="flex justify-center items-center"
+            className="flex justify-center items-center gap-1"
             onClick={handleLogout}
           >
             <LuLogOut /> Logout

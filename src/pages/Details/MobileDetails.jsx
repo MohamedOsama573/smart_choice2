@@ -168,6 +168,8 @@ export default function MobileDetails() {
                 priceNoon={product.priceNoon}
                 currency={product.currency}
                 category={product.category}
+                isRecomendation={true}
+
               />
             ))}
           </div>

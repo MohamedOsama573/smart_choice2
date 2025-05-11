@@ -181,7 +181,7 @@ function TelevisionDetails() {
               <li key={i}>{feat}</li>
             ))}
           </ul>
-        
+
           {/* Product Overview */}
           <h3 className="font-semibold mb-2">Product Overview:</h3>
           <div className="grid grid-cols-2 gap-2 text-sm mb-4">
@@ -194,29 +194,30 @@ function TelevisionDetails() {
         </div>
       </div>
       <div className="mt-8">
-            <h3 className="text-xl font-semibold mb-2">Recommended Products</h3>
-            {loading ? (
-              <div className="flex justify-center items-center my-8">
-                <Loading />
-              </div>
-            ) : (
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6 px-4">
-                {recomendationProducts.map((product) => (
-                  <HomeCard
-                    key={product._id}
-                    id={product._id}
-                    name={product.title}
-                    image={product.thumbnailImage}
-                    priceAmazon={product.priceAmazon}
-                    priceJumia={product.priceJumia}
-                    priceNoon={product.priceNoon}
-                    currency={product.currency}
-                    category={product.category}
-                  />
-                ))}
-              </div>
-            )}
+        <h3 className="text-xl font-semibold mb-2">Recommended Products</h3>
+        {loading ? (
+          <div className="flex justify-center items-center my-8">
+            <Loading />
           </div>
+        ) : (
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 mt-6 px-4">
+            {recomendationProducts.map((product) => (
+              <HomeCard
+                key={product._id}
+                id={product._id}
+                name={product.title}
+                image={product.thumbnailImage}
+                priceAmazon={product.priceAmazon}
+                priceJumia={product.priceJumia}
+                priceNoon={product.priceNoon}
+                currency={product.currency}
+                category={product.category}
+                isRecomendation={true}
+              />
+            ))}
+          </div>
+        )}
+      </div>
       {/* Reviews Section */}
       <div className="mt-8">
         <h3 className="text-xl font-semibold mb-4">Customer Reviews</h3>
